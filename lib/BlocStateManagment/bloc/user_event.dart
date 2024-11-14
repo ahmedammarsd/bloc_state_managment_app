@@ -6,3 +6,5 @@ class AddUserEvent extends UserEvent {
   String name, email, gender;
   AddUserEvent({required this.email, required this.gender, required this.name});
 }
+
+class SetToInitialState extends UserEvent {}

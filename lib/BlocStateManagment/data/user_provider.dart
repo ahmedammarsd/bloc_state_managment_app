@@ -10,6 +10,9 @@ class ApiProvider {
     print("connect to internet");
     Response response =
         await http.get(Uri.parse('https://gorest.co.in/public/v2/users'));
+    print("=======================================");
+    print("response");
+    print(response.statusCode);
     if (response.statusCode == 200) {
       final body = json.decode(response.body) as List;
       for (var json in body) {

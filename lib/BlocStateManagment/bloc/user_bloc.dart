@@ -11,6 +11,11 @@ class UsersBloc extends Bloc<UserEvent, UserState> {
   UsersBloc() : super(InitialState()) {
     on<GetUserEvent>(_getUserList);
     on<AddUserEvent>(_addUser);
+    on<SetToInitialState>(
+      (event, emit) {
+        emit(InitialState());
+      },
+    );
   }
 
   FutureOr<void> _getUserList(
@@ -18,8 +23,11 @@ class UsersBloc extends Bloc<UserEvent, UserState> {
     emit(LoadingState());
     try {
       List<User> user = await ApiProvider().getUsers();
+      print("============== user ==================");
+      print(user);
       emit(SuccessUserList(user, false));
     } catch (error) {
+      print("=========================== The Error =============");
       print(error);
       emit(FailureState());
     }
@@ -30,13 +38,20 @@ class UsersBloc extends Bloc<UserEvent, UserState> {
     try {
       bool isCreated = await ApiProvider()
           .postUser(name: event.name, gender: event.gender, email: event.email);
-      if (isCreated)
+      if (isCreated) {
         emit(SuccessCreatedUser());
-      else
+      } else {
         emit(FailureState());
+      }
     } catch (error) {
       print(error);
       emit(FailureState());
     }
+  }
+
+  FutureOr<void> _toInitialState(
+      SetToInitialState event, Emitter<UserState> emit) {
+    print("work initial");
+    emit(InitialState());
   }
 }

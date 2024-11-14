@@ -1,3 +1,5 @@
+import 'package:bloc_state_management_app/BlocStateManagment/UI/user_ui_screen.dart';
+import 'package:bloc_state_management_app/BlocStateManagment/bloc/user_bloc.dart';
 import 'package:bloc_state_management_app/bloc/counter_bloc.dart';
 import 'package:bloc_state_management_app/pages/home.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +21,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MultiBlocProvider(providers: [
-        BlocProvider(
-          create: (context) => CounterBloc(),
-        )
-      ], child: const Home()),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => CounterBloc(),
+          ),
+          BlocProvider(
+            create: (context) => UsersBloc(),
+          )
+        ],
+        child: const MyBlocPage(),
+      ),
     );
   }
 }
