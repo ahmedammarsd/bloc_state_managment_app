@@ -11,11 +11,7 @@ class UsersBloc extends Bloc<UserEvent, UserState> {
   UsersBloc() : super(InitialState()) {
     on<GetUserEvent>(_getUserList);
     on<AddUserEvent>(_addUser);
-    on<SetToInitialState>(
-      (event, emit) {
-        emit(InitialState());
-      },
-    );
+    on<SetToInitialState>(_toInitialState);
   }
 
   FutureOr<void> _getUserList(
@@ -51,7 +47,6 @@ class UsersBloc extends Bloc<UserEvent, UserState> {
 
   FutureOr<void> _toInitialState(
       SetToInitialState event, Emitter<UserState> emit) {
-    print("work initial");
     emit(InitialState());
   }
 }
